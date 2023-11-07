@@ -1,117 +1,15 @@
-const usersArray = [
-    {
-      fullname: 'John Doe',
-      age: 30,
-      email: 'john.doe@example.com',
-      id: '1',
-      active: true,
-      password: 'password123',
-      bornDate: 725846400000,
-      location: 'La Luna',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/7/71/Mk8iconyoshi.png?width=1280'
-    },
-    {
-      fullname: 'Jane Doe',
-      age: 25,
-      email: 'jane.doe@example.com',
-      id: '2',
-      active: false,
-      password: 'password456',
-      bornDate: new Date('1998-05-05').getTime(),
-      location: 'Mendoza',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/f/f5/Mk8icondaisy.png?width=1280'
-    },
-    {
-      fullname: 'Alice Johnson',
-      age: 35,
-      email: 'alice.johnson@example.com',
-      id: '3',
-      active: true,
-      password: 'password789',
-      bornDate: new Date('1988-08-08').getTime(),
-      location: 'Mendoza',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/1/1d/Mk8icontoadette.png?width=325'
-    },
-    {
-      fullname: 'Michael Smith',
-      age: 40,
-      email: 'michael.smith@example.com',
-      id: '4',
-      active: false,
-      password: 'password101',
-      bornDate: new Date('1983-04-10').getTime(),
-      location: 'San Luis',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/d/d1/Mk8iconrosalina.png?width=1280'
-    },
-    {
-      fullname: 'Emily Johnson',
-      age: 28,
-      email: 'emily.johnson@example.com',
-      id: '5',
-      active: true,
-      password: 'password202',
-      bornDate: new Date('1995-02-15').getTime(),
-      location: 'Córdoba',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/5/59/Mk8iconpeach.png?width=325'
-    },
-    {
-      fullname: 'Daniel Lee',
-      age: 34,
-      email: 'daniel.lee@example.com',
-      id: '6',
-      active: false,
-      password: 'password303',
-      bornDate: new Date('1989-07-07').getTime(),
-      location: 'Buenos Aires',
-      image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/bf/Mk8iconmario.png?width=325'
-    },
-    // {
-    //   fullname: 'Samantha Davis',
-    //   age: 22,
-    //   email: 'samantha.davis@example.com',
-    //   id: '7',
-    //   active: true,
-    //   password: 'password404',
-    //   bornDate: new Date('2001-11-11').getTime(),
-    //   location: 'Boston, MA',
-    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/2/2d/Mk8icondk.png?width=325'
-    // },
-    // {
-    //   fullname: 'James Moore',
-    //   age: 45,
-    //   email: 'james.moore@example.com',
-    //   id: '8',
-    //   active: false,
-    //   password: 'password505',
-    //   bornDate: new Date('1978-12-19').getTime(),
-    //   location: 'Dallas, TX',
-    //   image: "https://m.media-amazon.com/images/I/81wNRtDaTXL.png"
-    // },
-    // {
-    //   fullname: 'Isabella Taylor',
-    //   age: 29,
-    //   email: 'isabella.taylor@example.com',
-    //   id: '9',
-    //   active: true,
-    //   password: 'password606',
-    //   bornDate: new Date('1994-06-24').getTime(),
-    //   location: 'San Diego, CA',
-    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/3/3a/Mk8iconkoopa.png?width=325'
-    // },
-    // {
-    //   fullname: 'Ethan Johnson',
-    //   age: 31,
-    //   email: 'ethan.johnson@example.com',
-    //   id: '10',
-    //   active: false,
-    //   password: 'password707',
-    //   bornDate: new Date('1992-03-03').getTime(),
-    //   location: 'Denver, CO',
-    //   image: 'https://oyster.ignimgs.com/mediawiki/apis.ign.com/mario-kart-for-wii-u/b/b7/Mk8iconbowser.png?width=325'
-    // }
-];
 
-console.log(usersArray)
+const usersArray = JSON.parse(localStorage.getItem("users"))
+
+// if(JSON.parse(localStorage.getItem("users"))) {
+//   // Si es nulo no entra al if
+
+//   usersArray = JSON.parse( localStorage.getItem()  )
+
+// } else {
+//   // -> 
+//   usersArray = []
+// }
 
 // Obtener el body de la tabla
 const tableBody = document.getElementById('table-body')
@@ -130,22 +28,25 @@ userForm.addEventListener("submit", (evt) => {
 
   //Debería cortar la ejecución de la función callback del evento submit
   // !Password y password2 sean distintos
-  if(el.password.value !== el.password2.value ) {
+  if (el.password.value !== el.password2.value) {
     alert(`Las contraseñas no coiciden`)
     return;
   }
 
   // !Email ya existe
-  // const emailExist = usersArray.find((user) => {
-  //   if(user.email === el.email.value) {
-  //     return true
-  //   }
-  // })
+  const emailExist = usersArray.find((user) => {
+    if (user.email === el.email.value) {
+      return true
+    }
+  })
 
-  // if(emailExist) {
-  //   alert(`El correo ya se encuentra registrado`)
-  //   return
-  // }
+  if (emailExist && el.id.value !== emailExist.id) {
+    Swal.fire({
+      title: 'El correo ya existe',
+      icon: 'error'
+    })
+    return
+  }
 
   // # If else convencional
   // let id;
@@ -169,19 +70,20 @@ userForm.addEventListener("submit", (evt) => {
     bornDate: new Date(el.bornDate.value).getTime(),
     location: el.location.value,
     id: id,
-    image: el.image.value
-  } 
+    image: el.image.value,
+    role: 'CLIENT_ROLE'
+  }
 
   // Tenemos 2 posibles acciones a realizar
   //  a- Al estar editando debería reemplazar el usuario a editar con sus información actualizada
   //  b- Agregue un usuario nuevo
 
   // Pregunto si tengo id para saber si estoy editando o no
-  if(el.id.value) {
+  if (el.id.value) {
     // -Editando
     const indice = usersArray.findIndex(usuario => {
 
-      if(usuario.id === el.id.value) {
+      if (usuario.id === el.id.value) {
         return true
       }
     })
@@ -206,6 +108,9 @@ userForm.addEventListener("submit", (evt) => {
     })
   }
   pintarUsuarios(usersArray)
+  // -Actualizo el localStorage
+  actualizarLocalStorage()
+
   resetearFormulario()
 
 })
@@ -222,7 +127,7 @@ function resetearFormulario() {
 
 // Filtro de usuarios
 //Escuchar cuando el usuario presiona una tecla en el input search
-searchInput.addEventListener('keyup', (eventito)=> {
+searchInput.addEventListener('keyup', (eventito) => {
 
   // Obtener el valor del input y lo pasamos a minúsculas
   const inputValue = eventito.target.value.toLowerCase();
@@ -233,19 +138,20 @@ searchInput.addEventListener('keyup', (eventito)=> {
 
     const nombre = usuario.fullname.toLowerCase()
 
-    if(nombre.includes(inputValue)) {
+    if (nombre.includes(inputValue)) {
       return true
-    } 
+    }
     return false
 
   })
 
   // Pintar solo los usuario que hayan coincido
   pintarUsuarios(usuariosFiltrados)
-  
+
 })
 
-
+//Llamo por primera vez que se ejecuta mi script la función pintar usuarios
+pintarUsuarios(usersArray)
 
 
 
@@ -253,9 +159,9 @@ function pintarUsuarios(arrayPintar) {
   // Iterar el array y agregar un tr por cada alumno que tengamos. 
   tableBody.innerHTML = '';
 
-  arrayPintar.forEach( (user, indiceActual) => {
+  arrayPintar.forEach((user, indiceActual) => {
 
-      tableBody.innerHTML += `
+    tableBody.innerHTML += `
         <tr class="table-row">
             <td class="user-image">
                 <img src="${user.image}" alt="${user.fullname} avatar">
@@ -269,7 +175,8 @@ function pintarUsuarios(arrayPintar) {
 
             <td>
 
-              <button class="action-btn btn-danger" title="Borrar usuario" onclick="borrarUsuario(${indiceActual})" >
+              <button class="action-btn btn-danger" title="Borrar usuario" 
+                      onclick="borrarUsuario(  '${user.id}', '${user.fullname}'  )" >
                 <i class="fa-solid fa-trash-can"></i>
               </button>
 
@@ -287,13 +194,28 @@ function pintarUsuarios(arrayPintar) {
 
 }
 
-//Llamo por primera vez que se ejecuta mi script la función pintar usuarios
-pintarUsuarios(usersArray)
+function actualizarLocalStorage() {
+
+  localStorage.setItem("users", JSON.stringify(usersArray))
+
+}
 
 
-function borrarUsuario(indice) {
-  usersArray.splice(indice, 1)
-  pintarUsuarios(usersArray)
+function borrarUsuario(ID, nombre) {
+
+  const confirmDelete = confirm(`Realmente desea borrar este usuario ${nombre}`)
+
+  if (confirmDelete) {
+
+    const indice = usersArray.findIndex(user => user.id === ID)
+
+    usersArray.splice(indice, 1)
+    pintarUsuarios(usersArray)
+
+    actualizarLocalStorage()
+
+  }
+
 }
 
 // forEach, map, filter, findIndex, find, flat, flatMap, every, some
@@ -306,14 +228,14 @@ function editarUsuario(idBuscar) {
   const userEdit = usersArray.find((usuario) => {
 
     //deberia devolver un true, según la condición id que me enviaron === al del usuario que estoy iterando
-    if(usuario.id === idBuscar) {
+    if (usuario.id === idBuscar) {
       return true
     }
 
   })
 
   //Indicar que el usuario no fue encontrado
-  if(!userEdit) {
+  if (!userEdit) {
     Swal.fire('Error al editar', 'No se pudo editar el usuario', 'error')
     return
   }
@@ -346,16 +268,16 @@ function editarUsuario(idBuscar) {
   //// ❌repeat password
   //// ❌fecha
   el.bornDate.value = formatInputDate(userEdit.bornDate)
-  
+
   // -Cambiar el nombre del botón a editar usuario
 
   submitBtn.classList.add('btn-edit');
   submitBtn.innerText = 'Editar usuario'
   // Deshabilitar los input de contraseña
 
-  
 
-  
+
+
 
 }
 
@@ -364,14 +286,16 @@ function editarUsuario(idBuscar) {
 
 
 
-{/* 
-<tr class="table-body">
-    <td class="user-image">
-        <img src="https://m.media-amazon.com/images/I/81wNRtDaTXL.png" alt="Imagen de prueba">
-    </td>
-    <td class="user-name">Sonic Heroes</td>
-    <td class="user-email">sonic@gmail.com</td>
-    <td class="user-location">Super Mario World</td>
-    <td class="user-age">24</td>
-    <td class="user-date">24/05/98</td>
-</tr> */}
+{
+  /* 
+  <tr class="table-body">
+      <td class="user-image">
+          <img src="https://m.media-amazon.com/images/I/81wNRtDaTXL.png" alt="Imagen de prueba">
+      </td>
+      <td class="user-name">Sonic Heroes</td>
+      <td class="user-email">sonic@gmail.com</td>
+      <td class="user-location">Super Mario World</td>
+      <td class="user-age">24</td>
+      <td class="user-date">24/05/98</td>
+  </tr> */
+}
